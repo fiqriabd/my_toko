@@ -16,7 +16,7 @@
         <ul class="sidebar-menu" data-widget="tree">
 
             <li>
-                <a href="#">
+                <a href="{{ route('dashboard') }}">
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                 </a>
             </li>
@@ -24,7 +24,7 @@
             <li class="header">MASTER</li>
 
             <li>
-                <a href="#">
+                <a href="{{ route('kategori.index') }}">
                     <i class="fa fa-cube"></i> <span>Kategori</span>
                 </a>
             </li>

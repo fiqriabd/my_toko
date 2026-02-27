@@ -1,0 +1,23 @@
+<svg width="175" height="70" xmlns="http://www.w3.org/2000/svg">
+ <!-- Gradient Definition -->
+ <defs>
+  <linearGradient y2="100%" x2="100%" y1="0%" x1="0%" id="bagGradientBlueText">
+   <stop stop-color="#1976d2" offset="0%"/>
+   <stop stop-color="#4caf50" offset="50%"/>
+   <stop stop-color="#ff9800" offset="100%"/>
+  </linearGradient>
+ </defs>
+ <!-- Bag Body -->
+ <!-- Bag Handle -->
+ <!-- Minimal Veg / Detail -->
+ <!-- Text My Toko (rapi, jarak lebih kecil) -->
+ <g>
+  <title>Layer 1</title>
+  <rect id="svg_1" fill="url(#bagGradientBlueText)" rx="6" height="40" width="40" y="20" x="10"/>
+  <path id="svg_2" fill="none" stroke-width="4" stroke="#1b5e20" d="m15,20q15,-15 30,0"/>
+  <circle id="svg_3" fill="#81c784" r="5" cy="45" cx="20"/>
+  <circle id="svg_4" fill="#ffd54f" r="5" cy="45" cx="40"/>
+  <text id="svg_5" letter-spacing="-1" fill="#1976d2" font-weight="bold" font-size="28" font-family="Arial, sans-serif" y="50" x="60">My</text>
+  <text id="svg_6" letter-spacing="-1" fill="#4caf50" font-weight="bold" font-size="28" font-family="Arial, sans-serif" y="50" x="105">Toko</text>
+ </g>
+</svg>
