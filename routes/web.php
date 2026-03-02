@@ -13,6 +13,6 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'),'verified',]
 });
 
 Route::group(['middleware' => 'auth'], function(){
-    Route::get('kategori/data', [KategoriController::class, 'data']);
+    Route::get('kategori/data', [KategoriController::class, 'data'])->name('kategori.data');
     Route::resource('/kategori', KategoriController::class);
 });
