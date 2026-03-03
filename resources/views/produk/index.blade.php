@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
 @section('title')
-    Kategori
+    Produk
 @endsection
 
 @section('breadcrumb')
     @parent
-    <li class="active">Kategori</li>
+    <li class="active">Produk</li>
 @endsection
 
 @section('content')
@@ -15,13 +15,19 @@
           <div class="col-lg-12">
             <div class="box">
               <div class="box-header with-border">
-                <button onclick="addForm('{{ route('kategori.store') }}')" class="btn btn-success btn-sm btn-flat"><i class="fa fa-plus-circle"> Tambah</i></button>
+                <button onclick="addForm('{{ route('produk.store') }}')" class="btn btn-success btn-sm btn-flat"><i class="fa fa-plus-circle"> Tambah</i></button>
               </div>
                 <div class="box-body table-responsive">
                     <table class="table table-stiped table-bordered">
                     <thead>
                         <th width="5%">No</th>
+                        <th>Kode</th>
+                        <th>Nama</th>
                         <th>Kategori</th>
+                        <th>Merk</th>
+                        <th>Harga Beli</th>
+                        <th>Harga Jual</th>
+                        <th>Stok</th>
                         <th width="15%">Aksi <i class="fa fa-cog"></i></th>
                     </thead>
                     <tbody></tbody>
@@ -33,7 +39,7 @@
           <!-- /.col -->
         </div>
         <!-- /.row -->
-@includeIf('kategori.form')
+@includeIf('produk.form')
 @endsection
 
 @push('scripts')
@@ -45,11 +51,17 @@
       processing: true,
       autoWidth: false,
       ajax: {
-        url:'{{ route('kategori.data') }}',
+        url:'{{ route('produk.data') }}',
       },
       columns:[
         {data: 'DT_RowIndex', searchable: false, sortable: false},
+        {data: 'kode_produk'},
         {data: 'nama'},
+        {data: 'kategori'},
+        {data: 'merk'},
+        {data: 'harga_beli'},
+        {data: 'harga_jual'},
+        {data: 'stok'},
         {data: 'aksi', searchable: false, sortable: false}
       ]
     });
@@ -72,26 +84,26 @@
 
   function addForm(url){
     $('#modal-form').modal('show');
-    $('#modal-form .modal-title').text('Tambah Kategori');
+    $('#modal-form .modal-title').text('Tambah Produk');
 
     $('#modal-form form')[0].reset();
     $('#modal-form form').attr('action', url);
     $('#modal-form [name=_method]').val('post');
-    $('#modal-form [name=nama_kategori]').focus();
+    $('#modal-form [name=nama_produk]').focus();
   }
 
   function editForm(url){
     $('#modal-form').modal('show');
-    $('#modal-form .modal-title').text('Edit Kategori');
+    $('#modal-form .modal-title').text('Edit Produk');
 
     $('#modal-form form')[0].reset();
     $('#modal-form form').attr('action', url);
     $('#modal-form [name=_method]').val('put');
-    $('#modal-form [name=nama_kategori]').focus();
+    $('#modal-form [name=nama_produk]').focus();
 
     $.get(url)
         .done((response) => {
-            $('#modal-form [name=nama_kategori]').val(response.nama);
+            $('#modal-form [name=nama_produk]').val(response.nama);
         })
         .fail((errors) => {
             alert('Tidak dapat menampilkan data');

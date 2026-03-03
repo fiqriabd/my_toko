@@ -7,28 +7,26 @@ use App\Models\Kategori;
 
 class KategoriController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return view('kategori.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function data()
     {
-        $kategori = Kategori::orderBy('id_kategori', 'desc')->get();
+        $kategori = Kategori::orderBy('id_kategori', 'asc')->get();
         return datatables()
         ->of($kategori)
         ->addIndexColumn()
         ->addColumn('aksi', function ($kategori) {
             return '
-                <button class="btn btn-xs btn-info btn-flat">
-                '
+            <div class="btn-group">
+                <button onclick="editForm(`'.route('kategori.update', $kategori->id_kategori).'`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i> Edit</button>
+                <button onclick="deleteData(`'.route('kategori.destroy', $kategori->id_kategori).'`)"class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i> Hapus</button>
+            </div>
+                ';
         })
+        ->rawColumns(['aksi'])
         ->make(true);
     }
     public function create()
@@ -36,9 +34,6 @@ class KategoriController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $kategori = new Kategori();
@@ -48,35 +43,32 @@ class KategoriController extends Controller
         return response()->json('Data berhasil disimpan', 200);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
+        $kategori = Kategori::find($id);
+
+        return response()->json($kategori);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+        $kategori = Kategori::find($id);
+        $kategori->nama = $request->nama_kategori;
+        $kategori->update();
+
+        return response()->json('Data berhasil disimpan', 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $kategori = Kategori::find($id);
+        $kategori->delete();
+
+        return response()->json(null,204);
     }
 }
