@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('pembelian', function (Blueprint $table) {
             $table->increments('id_pembelian');
             $table->integer('id_distributor');
-            $table->integer('total_item');
-            $table->integer('total_harga');
-            $table->tinyInteger('diskon')->default(0);
-            $table->integer('bayar');
+            $table->integer('total_item_pembelian');
+            $table->integer('total_harga_pembelian');
+            $table->tinyInteger('diskon_pembelian')->default(0);
+            $table->integer('bayar_pembelian');
             $table->timestamps();
     });
     }

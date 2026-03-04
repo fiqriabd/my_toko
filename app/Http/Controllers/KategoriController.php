@@ -37,7 +37,7 @@ class KategoriController extends Controller
     public function store(Request $request)
     {
         $kategori = new Kategori();
-        $kategori->nama = $request->nama_kategori;
+        $kategori->nama_kategori = $request->nama_kategori;
         $kategori->save();
 
         return response()->json('Data berhasil disimpan', 200);
@@ -58,7 +58,7 @@ class KategoriController extends Controller
     public function update(Request $request, string $id)
     {
         $kategori = Kategori::find($id);
-        $kategori->nama = $request->nama_kategori;
+        $kategori->nama_kategori = $request->nama_kategori;
         $kategori->update();
 
         return response()->json('Data berhasil disimpan', 200);

@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use function Livewire\after;
 
 return new class extends Migration
 {
@@ -11,12 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('distributor', function (Blueprint $table) {
-            $table->increments('id_distributor');
-            $table->string('nama_distributor');
-            $table->text('alamat_distributor')->nullable();
-            $table->string('telepon_distributor');
-            $table->timestamps();
+        Schema::table('produk', function (Blueprint $table) {
+            $table->string('kode_produk')
+                  ->unique()
+                  ->after('id_kategori');
         });
     }
 
@@ -25,6 +24,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('distributor');
+        Schema::table('produk', function (Blueprint $table) {
+            $table->dropColumn('kode_produk');
+        });
     }
 };

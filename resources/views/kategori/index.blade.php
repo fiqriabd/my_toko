@@ -49,7 +49,7 @@
       },
       columns:[
         {data: 'DT_RowIndex', searchable: false, sortable: false},
-        {data: 'nama'},
+        {data: 'nama_kategori'},
         {data: 'aksi', searchable: false, sortable: false}
       ]
     });
@@ -91,7 +91,7 @@
 
     $.get(url)
         .done((response) => {
-            $('#modal-form [name=nama_kategori]').val(response.nama);
+            $('#modal-form [name=nama_kategori]').val(response.nama_kategori);
         })
         .fail((errors) => {
             alert('Tidak dapat menampilkan data');

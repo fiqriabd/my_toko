@@ -15,9 +15,9 @@ return new class extends Migration
         $table->increments('id_penjualan_detail');
         $table->integer('id_penjualan');
         $table->integer('id_produk');
-        $table->integer('harga_jual');
-        $table->integer('jumlah');
-        $table->integer('subtotal');
+        $table->integer('harga_jual_penjualan_detail');
+        $table->integer('jumlah_penjualan_detail');
+        $table->integer('subtotal_penjualan_detail');
         $table->timestamps();
         });
     }

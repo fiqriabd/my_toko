@@ -56,12 +56,12 @@
       columns:[
         {data: 'DT_RowIndex', searchable: false, sortable: false},
         {data: 'kode_produk'},
-        {data: 'nama'},
-        {data: 'kategori'},
-        {data: 'merk'},
-        {data: 'harga_beli'},
-        {data: 'harga_jual'},
-        {data: 'stok'},
+        {data: 'nama_produk'},
+        {data: 'nama_kategori'},
+        {data: 'merk_produk'},
+        {data: 'harga_beli_produk'},
+        {data: 'harga_jual_produk'},
+        {data: 'stok_produk'},
         {data: 'aksi', searchable: false, sortable: false}
       ]
     });
@@ -103,7 +103,7 @@
 
     $.get(url)
         .done((response) => {
-            $('#modal-form [name=nama_produk]').val(response.nama);
+            $('#modal-form [name=nama_produk]').val(response.nama_produk);
         })
         .fail((errors) => {
             alert('Tidak dapat menampilkan data');

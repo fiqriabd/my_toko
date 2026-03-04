@@ -13,9 +13,9 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group row">
-                        <label for="nama" class="col-lg-2 col-lg-offset-1 control-label">Nama</label>
+                        <label for="nama_produk" class="col-lg-2 col-lg-offset-1 control-label">Nama</label>
                         <div class="col-lg-6">
-                            <input type="text" name="nama" id="nama" class="form-control" required autofocus>
+                            <input type="text" name="nama_produk" id="nama_produk" class="form-control" required autofocus>
                             <span class="help-block with-errors"></span>
                         </div>
                     </div>
@@ -32,30 +32,30 @@
                         </div>
                     </div> 
                     <div class="form-group row">
-                        <label for="merk" class="col-lg-2 col-lg-offset-1 control-label">Merk</label>
+                        <label for="merk_produk" class="col-lg-2 col-lg-offset-1 control-label">Merk</label>
                         <div class="col-lg-6">
-                            <input type="text" name="merk" id="merk" class="form-control">
+                            <input type="text" name="merk_produk" id="merk_produk" class="form-control">
                             <span class="help-block with-errors"></span>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="harga_beli" class="col-lg-2 col-lg-offset-1 control-label">Harga Beli</label>
+                        <label for="harga_beli_produk" class="col-lg-2 col-lg-offset-1 control-label">Harga Beli</label>
                         <div class="col-lg-6">
-                            <input type="number" name="harga_beli" id="harga_beli" class="form-control" required>
+                            <input type="number" name="harga_beli_produk" id="harga_beli_produk" class="form-control" required>
                             <span class="help-block with-errors"></span>
                         </div>
                     </div>  
                     <div class="form-group row">
-                        <label for="harga_jual" class="col-lg-2 col-lg-offset-1 control-label">Harga Jual</label>
+                        <label for="harga_jual_produk" class="col-lg-2 col-lg-offset-1 control-label">Harga Jual</label>
                         <div class="col-lg-6">
-                            <input type="number" name="harga_jual" id="harga_jual" class="form-control" required>
+                            <input type="number" name="harga_jual_produk" id="harga_jual_produk" class="form-control" required>
                             <span class="help-block with-errors"></span>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="stok" class="col-lg-2 col-lg-offset-1 control-label">Stok</label>
+                        <label for="stok_produk" class="col-lg-2 col-lg-offset-1 control-label">Stok</label>
                         <div class="col-lg-6">
-                            <input type="number" name="stok" id="stok" class="form-control"required value="0">
+                            <input type="number" name="stok_produk" id="stok_produk" class="form-control"required value="0">
                             <span class="help-block with-errors"></span>
                         </div>
                     </div>                                                            

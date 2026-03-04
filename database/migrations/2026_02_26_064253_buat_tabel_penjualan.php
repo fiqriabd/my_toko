@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('penjualan', function (Blueprint $table) {
             $table->increments('id_penjualan');
-            $table->integer('total_item');
-            $table->integer('total_harga');
-            $table->integer('bayar');
-            $table->integer('diterima');
-            $table->integer('id_pengguna');
+            $table->integer('total_item_penjualan');
+            $table->integer('total_harga_penjualan');
+            $table->integer('bayar_penjualan');
+            $table->integer('diterima_penjualan');
+            $table->integer('id_user');
             $table->timestamps();
     });
     }

@@ -10,15 +10,21 @@ class ProdukController extends Controller
 {
     public function index()
     {
-        $kategori = Kategori::all()->pluck('nama','id_kategori');
+        $kategori = Kategori::all()->pluck('nama_kategori','id_kategori');
         return view('produk.index', compact('kategori'));
     }
 
     public function data()
     {
-        $produk = Produk::orderBy('id_produk', 'asc')->get();
+        $produk = Produk::leftJoin('kategori','kategori.id_kategori','produk.id_kategori')
+            ->select('produk.*', 'nama_produk')
+            ->orderBy('id_produk', 'asc')->get();
+
         return datatables()
         ->of($produk)
+        ->addColumn('kategori', function ($produk) {
+            return $produk->nama_produk;
+        })
         ->addIndexColumn()
         ->addColumn('aksi', function ($produk) {
             return '
@@ -39,7 +45,7 @@ class ProdukController extends Controller
     public function store(Request $request)
     {
         $produk = Produk::latest()->first();
-        $request['kode_produk'] = 'P-'. tambah_nol_didepan($produk->id_produk);
+        $request['kode_produk'] = 'P'. tambah_nol_didepan((int)$produk->id_produk+1, 7);
         $produk = Produk::create($request->all());
          
         return response()->json('Data berhasil disimpan', 200);
@@ -60,7 +66,7 @@ class ProdukController extends Controller
     public function update(Request $request, string $id)
     {
         $produk = Produk::find($id);
-        $produk->nama = $request->nama_produk;
+        $produk->nama_produk = $request->nama_produk;
         $produk->update();
 
         return response()->json('Data berhasil disimpan', 200);
