@@ -15,11 +15,19 @@
           <div class="col-lg-12">
             <div class="box">
               <div class="box-header with-border">
-                <button onclick="addForm('{{ route('produk.store') }}')" class="btn btn-success btn-sm btn-flat"><i class="fa fa-plus-circle"> Tambah</i></button>
+                <div class="btn-group">
+                    <button onclick="addForm('{{ route('produk.store') }}')" class="btn btn-success btn-sm btn-flat"><i class="fa fa-plus-circle"> Tambah</i></button>
+                    <button onclick="deleteSelected('{{ route('produk.delete_selected') }}')" class="btn btn-danger btn-sm btn-flat"><i class="fa fa-trash"> Hapus</i></button>
+                </div>
               </div>
                 <div class="box-body table-responsive">
+                  <form action="" class="form-produk">
+                    @csrf
                     <table class="table table-stiped table-bordered">
                     <thead>
+                        <th>
+                          <input type="checkbox" name="select_all" id="select_all">
+                        </th>                        
                         <th width="5%">No</th>
                         <th>Kode</th>
                         <th>Nama</th>
@@ -32,6 +40,7 @@
                     </thead>
                     <tbody></tbody>
                     </table>
+                  </form>
                 </div>
             </div>
             <!-- /.box -->
@@ -54,6 +63,7 @@
         url:'{{ route('produk.data') }}',
       },
       columns:[
+        {data: 'select_all'},
         {data: 'DT_RowIndex', searchable: false, sortable: false},
         {data: 'kode_produk'},
         {data: 'nama_produk'},
@@ -78,6 +88,10 @@
               return;
           });
       }
+    });
+
+    $('[name=select_all]').on('click', function(){
+        $(':checkbox').prop('checked', this.checked);
     })
 
   });
@@ -104,6 +118,12 @@
     $.get(url)
         .done((response) => {
             $('#modal-form [name=nama_produk]').val(response.nama_produk);
+            $('#modal-form [name=id_kategori]').val(response.id_kategori);
+            $('#modal-form [name=merk_produk]').val(response.merk_produk);
+            $('#modal-form [name=harga_beli_produk]').val(response.harga_beli_produk);
+            $('#modal-form [name=harga_jual_produk]').val(response.harga_jual_produk);
+            $('#modal-form [name=diskon_produk]').val(response.diskon_produk);
+            $('#modal-form [name=stok_produk]').val(response.stok_produk);
         })
         .fail((errors) => {
             alert('Tidak dapat menampilkan data');
@@ -127,5 +147,22 @@
       }
   }
    
+   function deleteSelected(url){
+        if ($('input:checked').length > 1){
+            if(confirm('Yakin ingin menghapus data terpilih?')){
+                $.post(url, $('.form-produk').serialize())
+                .done((response) => {
+                  table.ajax.reload();
+                })
+                .fail((errors) => {
+                  alert('Tidak dapat menghapus data');
+                  return;
+                });
+            }
+        } else{
+            alert('Pilih data yang akan dihapus');
+            return;
+        }
+   }
 </script>
 @endpush

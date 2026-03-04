@@ -10,22 +10,37 @@ class ProdukController extends Controller
 {
     public function index()
     {
-        $kategori = Kategori::all()->pluck('nama_kategori','id_kategori');
+        $kategori = Kategori::orderBy('nama_kategori','asc')
+                    ->pluck('nama_kategori','id_kategori');
         return view('produk.index', compact('kategori'));
     }
 
     public function data()
     {
         $produk = Produk::leftJoin('kategori','kategori.id_kategori','produk.id_kategori')
-            ->select('produk.*', 'nama_produk')
-            ->orderBy('id_produk', 'asc')->get();
+            ->select('produk.*', 'nama_kategori')
+            ->orderBy('kode_produk', 'asc')->get();
 
         return datatables()
         ->of($produk)
-        ->addColumn('kategori', function ($produk) {
-            return $produk->nama_produk;
-        })
         ->addIndexColumn()
+        ->addColumn('select_all', function ($produk){
+            return '
+                <input type="checkbox" name="id_produk[]" value="'. $produk->id_produk .'">
+            ';
+        })
+        ->addColumn('kode_produk', function ($produk){
+            return '<span class="label label-success">'. $produk->kode_produk .'</span>';
+        })
+        ->addColumn('harga_beli_produk', function ($produk){
+            return format_uang($produk->harga_beli_produk);
+        })
+        ->addColumn('harga_jual_produk', function ($produk){
+            return format_uang($produk->harga_jual_produk);
+        })
+        ->addColumn('stok_produk', function ($produk){
+            return format_uang($produk->stok_produk);
+        })
         ->addColumn('aksi', function ($produk) {
             return '
             <div class="btn-group">
@@ -34,7 +49,7 @@ class ProdukController extends Controller
             </div>
                 ';
         })
-        ->rawColumns(['aksi'])
+        ->rawColumns(['aksi', 'kode_produk', 'select_all'])
         ->make(true);
     }
     public function create()
@@ -44,10 +59,17 @@ class ProdukController extends Controller
 
     public function store(Request $request)
     {
-        $produk = Produk::latest()->first();
-        $request['kode_produk'] = 'P'. tambah_nol_didepan((int)$produk->id_produk+1, 7);
-        $produk = Produk::create($request->all());
-         
+        // $produk = Produk::latest()->first();
+        // $request['kode_produk'] = 'P'. tambah_nol_didepan((int)$produk->id_produk +1, 6);
+        // $produk = Produk::create($request->all());
+        $produkTerakhir = Produk::orderBy('id_produk', 'desc')->first();
+
+        $id = $produkTerakhir ? $produkTerakhir->id_produk + 1 : 1;
+
+        $request['kode_produk'] = 'P' . tambah_nol_didepan($id, 6);
+
+        Produk::create($request->all());
+
         return response()->json('Data berhasil disimpan', 200);
     }
 
@@ -66,8 +88,7 @@ class ProdukController extends Controller
     public function update(Request $request, string $id)
     {
         $produk = Produk::find($id);
-        $produk->nama_produk = $request->nama_produk;
-        $produk->update();
+        $produk->update($request->all());
 
         return response()->json('Data berhasil disimpan', 200);
     }
@@ -76,6 +97,16 @@ class ProdukController extends Controller
     {
         $produk = Produk::find($id);
         $produk->delete();
+
+        return response()->json(null,204);
+    }
+
+    public function deleteSelected(Request $request){
+
+        foreach ($request->id_produk as $id) {
+            $produk = Produk::find($id);
+            $produk->delete();
+        }
 
         return response()->json(null,204);
     }
