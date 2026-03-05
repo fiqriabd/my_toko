@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Produk;
 use App\Models\Kategori;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ProdukController extends Controller
 {
@@ -44,8 +45,8 @@ class ProdukController extends Controller
         ->addColumn('aksi', function ($produk) {
             return '
             <div class="btn-group">
-                <button onclick="editForm(`'.route('produk.update', $produk->id_produk).'`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i> Edit</button>
-                <button onclick="deleteData(`'.route('produk.destroy', $produk->id_produk).'`)"class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i> Hapus</button>
+                <button type="button" onclick="editForm(`'.route('produk.update', $produk->id_produk).'`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i> Edit</button>
+                <button type="button" onclick="deleteData(`'.route('produk.destroy', $produk->id_produk).'`)"class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i> Hapus</button>
             </div>
                 ';
         })
@@ -59,14 +60,11 @@ class ProdukController extends Controller
 
     public function store(Request $request)
     {
-        // $produk = Produk::latest()->first();
-        // $request['kode_produk'] = 'P'. tambah_nol_didepan((int)$produk->id_produk +1, 6);
-        // $produk = Produk::create($request->all());
         $produkTerakhir = Produk::orderBy('id_produk', 'desc')->first();
 
         $id = $produkTerakhir ? $produkTerakhir->id_produk + 1 : 1;
 
-        $request['kode_produk'] = 'P' . tambah_nol_didepan($id, 6);
+        $request['kode_produk'] = 'P' . time();
 
         Produk::create($request->all());
 
@@ -109,5 +107,20 @@ class ProdukController extends Controller
         }
 
         return response()->json(null,204);
+    }
+
+    public function cetakBarcode(Request $request)
+    {
+        $dataproduk = array();
+        foreach ($request->id_produk as $id) {
+            $produk = Produk::find($id);
+            $dataproduk[] = $produk;
+        }
+
+        $no = 1;
+        $pdf = Pdf::loadView('produk.barcode', compact('dataproduk', 'no'));
+        $pdf->setPaper('a4', 'potrait');
+        return $pdf->stream('produk.pdf');
+
     }
 }

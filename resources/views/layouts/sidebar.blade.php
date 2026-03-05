@@ -34,7 +34,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="{{ route('distributor.index') }}">
                     <i class="fa fa-truck"></i> <span>Distributor</span>
                 </a>
             </li>

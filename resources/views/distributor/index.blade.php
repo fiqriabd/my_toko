@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
 @section('title')
-    Kategori
+    Distributor
 @endsection
 
 @section('breadcrumb')
     @parent
-    <li class="active">Kategori</li>
+    <li class="active">Distributor</li>
 @endsection
 
 @section('content')
@@ -15,13 +15,15 @@
           <div class="col-lg-12">
             <div class="box">
               <div class="box-header with-border">
-                <button onclick="addForm('{{ route('kategori.store') }}')" class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"> Tambah</i></button>
+                <button onclick="addForm('{{ route('distributor.store') }}')" class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"> Tambah</i></button>
               </div>
                 <div class="box-body table-responsive">
                     <table class="table table-stiped table-bordered">
                     <thead>
                         <th width="5%">No</th>
-                        <th>Kategori</th>
+                        <th>Distributor</th>
+                        <th>Alamat</th>
+                        <th>Telepon</th>
                         <th width="15%">Aksi <i class="fa fa-cog"></i></th>
                     </thead>
                     <tbody></tbody>
@@ -33,7 +35,7 @@
           <!-- /.col -->
         </div>
         <!-- /.row -->
-@includeIf('kategori.form')
+@includeIf('distributor.form')
 @endsection
 
 @push('scripts')
@@ -45,11 +47,13 @@
       processing: true,
       autoWidth: false,
       ajax: {
-        url:'{{ route('kategori.data') }}',
+        url:'{{ route('distributor.data') }}',
       },
       columns:[
         {data: 'DT_RowIndex', searchable: false, sortable: false},
-        {data: 'nama_kategori'},
+        {data: 'nama_distributor'},
+        {data: 'alamat_distributor'},
+        {data: 'telepon_distributor'},
         {data: 'aksi', searchable: false, sortable: false}
       ]
     });
@@ -72,26 +76,28 @@
 
   function addForm(url){
     $('#modal-form').modal('show');
-    $('#modal-form .modal-title').text('Tambah Kategori');
+    $('#modal-form .modal-title').text('Tambah Distributor');
 
     $('#modal-form form')[0].reset();
     $('#modal-form form').attr('action', url);
     $('#modal-form [name=_method]').val('post');
-    $('#modal-form [name=nama_kategori]').focus();
+    $('#modal-form [name=nama_distributor]').focus();
   }
 
   function editForm(url){
     $('#modal-form').modal('show');
-    $('#modal-form .modal-title').text('Edit Kategori');
+    $('#modal-form .modal-title').text('Edit Distributor');
 
     $('#modal-form form')[0].reset();
     $('#modal-form form').attr('action', url);
     $('#modal-form [name=_method]').val('put');
-    $('#modal-form [name=nama_kategori]').focus();
+    $('#modal-form [name=nama_distributor]').focus();
 
     $.get(url)
         .done((response) => {
-            $('#modal-form [name=nama_kategori]').val(response.nama_kategori);
+            $('#modal-form [name=nama_distributor]').val(response.nama_distributor);
+            $('#modal-form [name=alamat_distributor]').val(response.alamat_distributor);
+            $('#modal-form [name=telepon_distributor]').val(response.telepon_distributor);
         })
         .fail((errors) => {
             alert('Tidak dapat menampilkan data');
