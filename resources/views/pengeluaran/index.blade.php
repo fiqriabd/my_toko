@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
 @section('title')
-    Distributor
+    Pengeluaran
 @endsection
 
 @section('breadcrumb')
     @parent
-    <li class="active">Distributor</li>
+    <li class="active">Pengeluaran</li>
 @endsection
 
 @section('content')
@@ -15,15 +15,15 @@
           <div class="col-lg-12">
             <div class="box">
               <div class="box-header with-border">
-                <button onclick="addForm('{{ route('distributor.store') }}')" class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"> Tambah</i></button>
+                <button onclick="addForm('{{ route('pengeluaran.store') }}')" class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"> Tambah</i></button>
               </div>
                 <div class="box-body table-responsive">
                     <table class="table table-stiped table-bordered">
                     <thead>
                         <th width="5%">No</th>
-                        <th>Nama</th>
-                        <th>Telepon</th>
-                        <th>Alamat</th>
+                        <th>Tanggal</th>
+                        <th>Deskripsi</th>
+                        <th>Nominal</th>
                         <th width="15%">Aksi <i class="fa fa-cog"></i></th>
                     </thead>
                     <tbody></tbody>
@@ -35,7 +35,7 @@
           <!-- /.col -->
         </div>
         <!-- /.row -->
-@includeIf('distributor.form')
+@includeIf('pengeluaran.form')
 @endsection
 
 @push('scripts')
@@ -47,13 +47,13 @@
       processing: true,
       autoWidth: false,
       ajax: {
-        url:'{{ route('distributor.data') }}',
+        url:'{{ route('pengeluaran.data') }}',
       },
       columns:[
         {data: 'DT_RowIndex', searchable: false, sortable: false},
-        {data: 'nama_distributor'},
-        {data: 'telepon_distributor'},
-        {data: 'alamat_distributor'},
+        {data: 'created_at'},
+        {data: 'deskripsi_pengeluaran'},
+        {data: 'nominal_pengeluaran'},
         {data: 'aksi', searchable: false, sortable: false}
       ]
     });
@@ -76,28 +76,28 @@
 
   function addForm(url){
     $('#modal-form').modal('show');
-    $('#modal-form .modal-title').text('Tambah Distributor');
+    $('#modal-form .modal-title').text('Tambah Pengeluaran');
 
     $('#modal-form form')[0].reset();
     $('#modal-form form').attr('action', url);
     $('#modal-form [name=_method]').val('post');
-    $('#modal-form [name=nama_distributor]').focus();
+    $('#modal-form [name=deskripsi_pengeluaran]').focus();
   }
 
   function editForm(url){
     $('#modal-form').modal('show');
-    $('#modal-form .modal-title').text('Edit Distributor');
+    $('#modal-form .modal-title').text('Edit Pengeluaran');
 
     $('#modal-form form')[0].reset();
     $('#modal-form form').attr('action', url);
     $('#modal-form [name=_method]').val('put');
-    $('#modal-form [name=nama_distributor]').focus();
+    $('#modal-form [name=deskripsi_pengeluaran]').focus();
 
     $.get(url)
         .done((response) => {
-            $('#modal-form [name=nama_distributor]').val(response.nama_distributor);
-            $('#modal-form [name=telepon_distributor]').val(response.telepon_distributor);
-            $('#modal-form [name=alamat_distributor]').val(response.alamat_distributor);
+            $('#modal-form [name=deskripsi_pengeluaran]').val(response.deskripsi_pengeluaran);
+            $('#modal-form [name=nominal_pengeluaran]').val(response.nominal_pengeluaran);
+            $('#modal-form [name=alamat_pengeluaran]').val(response.alamat_pengeluaran);
         })
         .fail((errors) => {
             alert('Tidak dapat menampilkan data');

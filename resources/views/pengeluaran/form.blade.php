@@ -13,26 +13,19 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group row">
-                        <label for="nama_distributor" class="col-lg-2 col-lg-offset-1 control-label">Nama</label>
+                        <label for="deskripsi_pengeluaran" class="col-lg-2 col-lg-offset-1 control-label">Deskripsi</label>
                         <div class="col-lg-6">
-                            <input type="text" name="nama_distributor" id="nama_distributor" class="form-control" required autofocus>
+                            <input type="text" name="deskripsi_pengeluaran" id="deskripsi_pengeluaran" class="form-control" required autofocus>
                             <span class="help-block with-errors"></span>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="telepon_distributor" class="col-lg-2 col-lg-offset-1 control-label">Telepon</label>
+                        <label for="nominal_pengeluaran" class="col-lg-2 col-lg-offset-1 control-label">Nominal</label>
                         <div class="col-lg-6">
-                            <input type="text" name="telepon_distributor" id="telepon_distributor" class="form-control" required>
+                            <input type="number" name="nominal_pengeluaran" id="nominal_pengeluaran" class="form-control" required>
                             <span class="help-block with-errors"></span>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="alamat_distributor" class="col-lg-2 col-lg-offset-1 control-label">Alamat</label>
-                        <div class="col-lg-6">
-                            <textarea name="alamat_distributor" id="alamat_distributor" rows="3" class="form-control"></textarea>
-                            <span class="help-block with-errors"></span>
-                        </div>
-                    </div>                      
+                    </div>                    
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-sm btn-flat btn-primary"><i class="fa fa-save"></i> Simpan</button>

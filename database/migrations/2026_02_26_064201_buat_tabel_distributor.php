@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('distributor', function (Blueprint $table) {
             $table->increments('id_distributor');
             $table->string('nama_distributor');
+            $table->string('telepon_distributor');            
             $table->text('alamat_distributor')->nullable();
-            $table->string('telepon_distributor');
             $table->timestamps();
         });
     }

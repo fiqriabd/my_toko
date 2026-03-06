@@ -60,11 +60,8 @@ class ProdukController extends Controller
 
     public function store(Request $request)
     {
-        $produkTerakhir = Produk::orderBy('id_produk', 'desc')->first();
-
-        $id = $produkTerakhir ? $produkTerakhir->id_produk + 1 : 1;
-
-        $request['kode_produk'] = 'P' . time();
+        $produk = Produk::latest()->first() ?? new Produk();
+        $request['kode_produk'] = 'P' . tambah_nol_didepan((int) $produk->id_produk +1, 6);
 
         Produk::create($request->all());
 

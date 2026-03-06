@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
 @section('title')
-    Distributor
+    Pembelian
 @endsection
 
 @section('breadcrumb')
     @parent
-    <li class="active">Distributor</li>
+    <li class="active">Pembelian</li>
 @endsection
 
 @section('content')
@@ -15,15 +15,18 @@
           <div class="col-lg-12">
             <div class="box">
               <div class="box-header with-border">
-                <button onclick="addForm('{{ route('distributor.store') }}')" class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"> Tambah</i></button>
+                <button onclick="addForm()" class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"> Transaksi Baru</i></button>
               </div>
                 <div class="box-body table-responsive">
                     <table class="table table-stiped table-bordered">
                     <thead>
                         <th width="5%">No</th>
-                        <th>Nama</th>
-                        <th>Telepon</th>
-                        <th>Alamat</th>
+                        <th>Tanggal</th>
+                        <th>Distributor</th>
+                        <th>Total Item</th>
+                        <th>Total Harga</th>
+                        <th>Diskon</th>
+                        <th>Total Bayar</th>
                         <th width="15%">Aksi <i class="fa fa-cog"></i></th>
                     </thead>
                     <tbody></tbody>
@@ -35,7 +38,7 @@
           <!-- /.col -->
         </div>
         <!-- /.row -->
-@includeIf('distributor.form')
+@includeIf('pembelian.distributor')
 @endsection
 
 @push('scripts')
@@ -44,60 +47,30 @@
 
   $(function(){
     table =   $('.table').DataTable({
-      processing: true,
-      autoWidth: false,
-      ajax: {
-        url:'{{ route('distributor.data') }}',
-      },
-      columns:[
-        {data: 'DT_RowIndex', searchable: false, sortable: false},
-        {data: 'nama_distributor'},
-        {data: 'telepon_distributor'},
-        {data: 'alamat_distributor'},
-        {data: 'aksi', searchable: false, sortable: false}
-      ]
+      
     });
-
-    $('#modal-form').validator().on('submit', function (e){
-      if (! e.preventDefault()){
-          $.post($('#modal-form form').attr('action'),$('#modal-form form').serialize())
-          .done((response) => {
-            $('#modal-form').modal('hide'); 
-            table.ajax.reload();
-          })
-          .fail((errors) => {
-              alert('Tidak dapat menyimpan data');
-              return;
-          });
-      }
-    })
 
   });
 
   function addForm(url){
-    $('#modal-form').modal('show');
-    $('#modal-form .modal-title').text('Tambah Distributor');
+    $('#modal-distributor').modal('show');
 
-    $('#modal-form form')[0].reset();
-    $('#modal-form form').attr('action', url);
-    $('#modal-form [name=_method]').val('post');
-    $('#modal-form [name=nama_distributor]').focus();
   }
 
   function editForm(url){
     $('#modal-form').modal('show');
-    $('#modal-form .modal-title').text('Edit Distributor');
+    $('#modal-form .modal-title').text('Edit Pembelian');
 
     $('#modal-form form')[0].reset();
     $('#modal-form form').attr('action', url);
     $('#modal-form [name=_method]').val('put');
-    $('#modal-form [name=nama_distributor]').focus();
+    $('#modal-form [name=deskripsi_pembelian]').focus();
 
     $.get(url)
         .done((response) => {
-            $('#modal-form [name=nama_distributor]').val(response.nama_distributor);
-            $('#modal-form [name=telepon_distributor]').val(response.telepon_distributor);
-            $('#modal-form [name=alamat_distributor]').val(response.alamat_distributor);
+            $('#modal-form [name=deskripsi_pembelian]').val(response.deskripsi_pembelian);
+            $('#modal-form [name=nominal_pembelian]').val(response.nominal_pembelian);
+            $('#modal-form [name=alamat_pembelian]').val(response.alamat_pembelian);
         })
         .fail((errors) => {
             alert('Tidak dapat menampilkan data');
