@@ -14,7 +14,7 @@ class DistributorController extends Controller
 
     public function data()
     {
-        $distributor = Distributor::orderBy('id_distributor', 'asc')->get();
+        $distributor = Distributor::orderBy('nama_distributor', 'asc')->get();
         return datatables()
         ->of($distributor)
         ->addIndexColumn()
