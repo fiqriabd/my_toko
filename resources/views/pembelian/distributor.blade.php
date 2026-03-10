@@ -10,7 +10,7 @@
                 <div class="modal-body">
                     <table class="table table-striped table-bordered">
                         <thead>
-                            <th>No</th>
+                            <th width="5%">No</th>
                             <th>Nama</th>
                             <th>Telepon</th>
                             <th>Alamat</th>
@@ -19,7 +19,7 @@
                         <tbody>
                             @foreach ($distributor as $key => $item)
                                 <tr>
-                                    <td>{{ $key+1 }}</td>
+                                    <td width="5%">{{ $key+1 }}</td>
                                     <td>{{ $item->nama_distributor }}</td>
                                     <td>{{ $item->telepon_distributor }}</td>
                                     <td>{{ $item->alamat_distributor }}</td>
