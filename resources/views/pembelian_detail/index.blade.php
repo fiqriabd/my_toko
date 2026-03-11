@@ -4,6 +4,26 @@
     Transaksi Pembelian
 @endsection
 
+@push('css')
+<style>
+  .tampil-bayar {
+      font-size: 5em;
+      text-align: center;
+      height: 100px;
+  }
+  .tampil-terbilang {
+      padding: 10px;
+      background: #f0f0f0;
+  }
+
+  @media(max-width: 768px){
+      .tampil-bayar {
+        font-size: 3em;
+        height: 70px;
+        padding-top: 5px;
+      }
+  }
+</style>
 @section('breadcrumb')
     @parent
     <li class="active">Transaksi Pembelian</li>
@@ -30,7 +50,7 @@
                   </tr>
                 </table>
               </div>
-                <div class="box-body table-responsive">
+                <div class="box-body">
                   <form class="form-produk">
                     @csrf
                         <div class="form-group row">
@@ -59,13 +79,50 @@
                     </thead>
                     <tbody></tbody>
                     </table>
+
+                    <div class="row">
+                      <div class="col-lg-8">
+                        <div class="tampil-bayar bg-primary"></div>
+                        <div class="tampil-terbilang"></div>
+                      </div>
+                      <div class="col-lg-4">
+                        <form action="{{ 'pembelian.store' }}" class="form-pembelian" method="post">
+                          @csrf
+                          <input type="hidden" class="id_pembelian" value="{{ $id_pembelian }}">
+                          <input type="hidden" class="total" id="total">
+                          <input type="hidden" class="total_item" id="total_item">
+                          <input type="hidden" class="bayar" id="bayar">
+
+                          <div class="form-group row">
+                            <label for="totalrp" class="col-lg-2 control-label">Total</label>
+                            <div class="col-lg-8">
+                              <input type="text" name="totalrp" id="totalrp" class="form-control" readonly>
+                            </div>
+                          </div>
+
+                          <div class="form-group row">
+                            <label for="diskon" class="col-lg-2 control-label">Diskon</label>
+                            <div class="col-lg-8">
+                              <input type="text" name="diskon" id="diskon" class="form-control">
+                            </div>
+                          </div>
+
+                          <div class="form-group row">
+                            <label for="bayar" class="col-lg-2 control-label">Bayar</label>
+                            <div class="col-lg-8">
+                              <input type="text" name="bayar" id="bayar" class="form-control">
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                  <button type="submit" class="btn btn-primary btn-sm btn-flat pull-right btn-simpan"><i class="fa fa-floopy-o"></i>Simpan Transaksi</button>
                 </div>
             </div>
-            <!-- /.box -->
           </div>
-          <!-- /.col -->
         </div>
-        <!-- /.row -->
 @includeIf('pembelian_detail.produk')
 @endsection
 
@@ -88,12 +145,42 @@
           {data: 'jumlah_pembelian_detail'},
           {data: 'subtotal_pembelian_detail'},
           {data: 'aksi', searchable: false, sortable: false},
-        ]
+        ], 
+        dom: 'Brt',
+        bSort: false,
     });
     table2 = $('.table-produk').DataTable();
 
-    $(document).on('input','quantity', function(){
+    $(document).on('input','.quantity', function(){
+        let id = $(this).data('id');
+        let jumlah = parseInt($(this).val());
 
+        if (jumlah < 1){
+          $(this).val(1);
+          alert("Jumlah tidak boleh kurang dari 1");
+          return;
+        }
+
+        if (jumlah > 1000) {
+          $(this).val(1000);
+          alert("Jumlah tidak boleh lebih dari 10000");
+          return;
+        }
+
+        $.post(`{{ url('/pembelian_detail') }}/${id}`,{
+              '_token': $('[name=csrf-token]').attr('content'),
+              '_method': 'put',
+              'jumlah_pembelian_detail': jumlah
+            })
+            .done(response => {
+              $(this).on('mouseout', function(){
+                  table.ajax.reload();
+              });
+            })
+            .fail(errors =>{
+                alert('Tidak dapat menyimpan data');
+                return;
+            });
     });
   });
 
