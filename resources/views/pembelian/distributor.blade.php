@@ -27,7 +27,7 @@
                                         <a href="{{ route('pembelian.create', $item->id_distributor) }}" class="btn btn-primary btn-xs btn-flat">
                                             <i class="fa fa-check-circle"></i>
                                             Pilih
-                                        </button>
+                                        </a>
                                     </td>
                                 </tr>
                             

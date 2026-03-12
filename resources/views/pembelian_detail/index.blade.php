@@ -11,9 +11,14 @@
       text-align: center;
       height: 100px;
   }
+
   .tampil-terbilang {
       padding: 10px;
       background: #f0f0f0;
+  }
+
+  .table-pembelian tbody tr:last-child{
+      display: none;
   }
 
   @media(max-width: 768px){
@@ -86,31 +91,31 @@
                         <div class="tampil-terbilang"></div>
                       </div>
                       <div class="col-lg-4">
-                        <form action="{{ 'pembelian.store' }}" class="form-pembelian" method="post">
+                        <form action="{{ route('pembelian.store') }}" class="form-pembelian" method="post">
                           @csrf
-                          <input type="hidden" class="id_pembelian" value="{{ $id_pembelian }}">
-                          <input type="hidden" class="total" id="total">
-                          <input type="hidden" class="total_item" id="total_item">
-                          <input type="hidden" class="bayar" id="bayar">
+                          <input type="hidden" name="id_pembelian" value="{{ $id_pembelian }}">
+                          <input type="hidden" name="total_harga_pembelian" id="total">
+                          <input type="hidden" name="total_item_pembelian" id="total_item_pembelian">
+                          <input type="hidden" name="bayar_pembelian" id="bayar_pembelian">
 
                           <div class="form-group row">
                             <label for="totalrp" class="col-lg-2 control-label">Total</label>
                             <div class="col-lg-8">
-                              <input type="text" name="totalrp" id="totalrp" class="form-control" readonly>
+                              <input type="text" id="totalrp" class="form-control" readonly>
                             </div>
                           </div>
 
                           <div class="form-group row">
-                            <label for="diskon" class="col-lg-2 control-label">Diskon</label>
+                            <label for="diskon_pembelian" class="col-lg-2 control-label">Diskon</label>
                             <div class="col-lg-8">
-                              <input type="text" name="diskon" id="diskon" class="form-control">
+                              <input type="number" name="diskon_pembelian" id="diskon_pembelian" class="form-control" value="0">
                             </div>
                           </div>
 
                           <div class="form-group row">
                             <label for="bayar" class="col-lg-2 control-label">Bayar</label>
                             <div class="col-lg-8">
-                              <input type="text" name="bayar" id="bayar" class="form-control">
+                              <input type="text" id="bayarrp" class="form-control">
                             </div>
                           </div>
                         </form>
@@ -148,6 +153,9 @@
         ], 
         dom: 'Brt',
         bSort: false,
+    })
+    .on('draw.dt', function(){
+        loadForm($('#diskon_pembelian').val());
     });
     table2 = $('.table-produk').DataTable();
 
@@ -178,37 +186,30 @@
               });
             })
             .fail(errors =>{
-                alert('Tidak dapat menyimpan data');
+                // alert('Tidak dapat menyimpan data');
                 return;
             });
     });
   });
 
+      $(document).on('input', '#diskon_pembelian', function(){
+        if($(this).val() == ""){
+          $(this).val(0).select();
+        }
+
+        loadForm($(this).val());
+    });
+
+    $('.btn-simpan').on('click', function(){
+        $('.form-pembelian').submit();
+    });
+
+
+
   function tampilProduk(){
     $('#modal-produk').modal('show');
 
   }
-
-  // function editForm(url){
-  //   $('#modal-form').modal('show');
-  //   $('#modal-form .modal-title').text('Edit Pembelian');
-
-  //   $('#modal-form form')[0].reset();
-  //   $('#modal-form form').attr('action', url);
-  //   $('#modal-form [name=_method]').val('put');
-  //   $('#modal-form [name=deskripsi_pembelian]').focus();
-
-  //   $.get(url)
-  //       .done((response) => {
-  //           $('#modal-form [name=deskripsi_pembelian]').val(response.deskripsi_pembelian);
-  //           $('#modal-form [name=nominal_pembelian]').val(response.nominal_pembelian);
-  //           $('#modal-form [name=alamat_pembelian]').val(response.alamat_pembelian);
-  //       })
-  //       .fail((errors) => {
-  //           alert('Tidak dapat menampilkan data');
-  //           return;
-  //     });  
-  // }
 
   function hideProduk(){
     $('#modal-produk').modal('hide');
@@ -236,7 +237,7 @@
   function deleteData(url){
       if(confirm('Yakin ingin menghapus data terpilih?')){
             $.post(url,{
-                    '_token': $('[name=csrf-token').attr('content'),
+                    '_token': $('[name=csrf-token]').attr('content'),
                     '_method': 'delete'
                 })
              .done((response) => {
@@ -249,5 +250,22 @@
       }
   }
    
+  function loadForm(diskon = 0) {
+      $('#total_harga_pembelian').val($('.total').text());
+      $('#total_item_pembelian').val($('.total_item').text());
+
+      $.get(`{{ url('/pembelian_detail/loadform') }}/${diskon}/${$('.total').text()}`)
+          .done(response => {
+              $('#totalrp').val('Rp. '+ response.totalrp);
+              $('#bayarrp').val('Rp. '+ response.bayarrp);
+              $('#bayar_pembelian').val(response.bayar);
+              $('.tampil-bayar').text('Rp. '+response.bayarrp);
+              $('.tampil-terbilang').text(response.terbilang);
+          })
+          .fail(errors => {
+              alert("Tidak dapat menampilkan data");
+              return;
+          })
+  }
 </script>
 @endpush
