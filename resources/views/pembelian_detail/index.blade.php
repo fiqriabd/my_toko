@@ -67,12 +67,13 @@
                             <input type="text" class="form-control" name="kode_produk" id="kode_produk">
                             <span class="input-group-btn">
                             <button onclick="tampilProduk()"class="btn btn-info btn-flat"type="button"><i class="fa fa-arrow-right"></i></button>
-                              </span>
+                            </span>
                           </div>
                         </div>                    
                       </div>
                   </form>
-                    <table class="table table-stiped table-bordered table-pembelian">
+
+                    <table class="table table-striped table-bordered table-pembelian">
                     <thead>
                         <th width="5%">No</th>
                         <th>Kode</th>
@@ -82,7 +83,6 @@
                         <th>Subtotal</th>
                         <th width="15%">Aksi <i class="fa fa-cog"></i></th>
                     </thead>
-                    <tbody></tbody>
                     </table>
 
                     <div class="row">
@@ -95,7 +95,7 @@
                           @csrf
                           <input type="hidden" name="id_pembelian" value="{{ $id_pembelian }}">
                           <input type="hidden" name="total_harga_pembelian" id="total">
-                          <input type="hidden" name="total_item_pembelian" id="total_item_pembelian">
+                          <input type="hidden" name="total_item_pembelian" id="total_item">
                           <input type="hidden" name="bayar_pembelian" id="bayar_pembelian">
 
                           <div class="form-group row">
@@ -136,8 +136,12 @@
   let table, table2;
 
   $(function(){
+    $('body').addClass('sidebar-collapse');
+
     table =   $('.table-pembelian').DataTable({
+        responsive: true,
         processing: true,
+        serverSide: true,
         autoWidth: false,
         ajax: {
           url: '{{ route('pembelian_detail.data', $id_pembelian) }}',
@@ -153,6 +157,7 @@
         ], 
         dom: 'Brt',
         bSort: false,
+        paginate: false
     })
     .on('draw.dt', function(){
         loadForm($('#diskon_pembelian').val());
@@ -241,7 +246,7 @@
                     '_method': 'delete'
                 })
              .done((response) => {
-                    table.ajax.reload();
+                    table.ajax.reload() => loadForm($('#diskon').val()));
                 })
               .fail((errors) => {
                     alert('Tidak dapat menghapus data');

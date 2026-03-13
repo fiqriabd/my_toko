@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
 @section('title')
-    Pembelian
+    Daftar Pembelian
 @endsection
 
 @section('breadcrumb')
     @parent
-    <li class="active">Pembelian</li>
+    <li class="active">Daftar Pembelian</li>
 @endsection
 
 @section('content')
@@ -21,7 +21,7 @@
                 @endempty
               </div>
                 <div class="box-body table-responsive">
-                    <table class="table table-stiped table-bordered">
+                    <table class="table table-striped table-bordered">
                     <thead>
                         <th width="5%">No</th>
                         <th>Tanggal</th>
@@ -32,7 +32,6 @@
                         <th>Total Bayar</th>
                         <th width="15%">Aksi <i class="fa fa-cog"></i></th>
                     </thead>
-                    <tbody></tbody>
                     </table>
                 </div>
             </div>
@@ -42,16 +41,48 @@
         </div>
         <!-- /.row -->
 @includeIf('pembelian.distributor')
+@includeIf('pembelian.detail')
 @endsection
 
 @push('scripts')
 <script>
-  let table;
+  let table, table1;
 
   $(function(){
     table =   $('.table').DataTable({
-      
+       responsive: true,
+            processing: true,
+            serverSide: true,
+            autoWidth: false,
+            ajax: {
+                url: '{{ route('pembelian.data') }}',
+            },
+            columns: [
+                {data: 'DT_RowIndex', searchable: false, sortable: false},
+                {data: 'tanggal'},
+                {data: 'distributor'},
+                {data: 'total_item_pembelian'},
+                {data: 'total_harga_pembelian'},
+                {data: 'diskon_pembelian'},
+                {data: 'bayar_pembelian'},
+                {data: 'aksi', searchable: false, sortable: false},
+            ]
     });
+
+     $('.table-supplier').DataTable();
+        table1 = $('.table-detail').DataTable({
+            processing: true,
+            bSort: false,
+            dom: 'Brt',
+            columns: [
+                {data: 'DT_RowIndex', searchable: false, sortable: false},
+                {data: 'kode_produk'},
+                {data: 'nama_produk'},
+                {data: 'harga_beli_pembelian_detail'},
+                {data: 'jumlah_pembelian_detail'},
+                {data: 'subtotal_pembelian_detail'},
+            ]
+        })
 
   });
 
@@ -59,6 +90,13 @@
     $('#modal-distributor').modal('show');
 
   }
+
+  function showDetail(url) {
+        $('#modal-detail').modal('show');
+
+        table1.ajax.url(url);
+        table1.ajax.reload();
+    }
 
   function editForm(url){
     $('#modal-form').modal('show');

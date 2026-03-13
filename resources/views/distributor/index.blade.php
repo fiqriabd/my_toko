@@ -18,7 +18,7 @@
                 <button onclick="addForm('{{ route('distributor.store') }}')" class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"> Tambah</i></button>
               </div>
                 <div class="box-body table-responsive">
-                    <table class="table table-stiped table-bordered">
+                    <table class="table table-striped table-bordered">
                     <thead>
                         <th width="5%">No</th>
                         <th>Nama</th>

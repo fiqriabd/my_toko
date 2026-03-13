@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Distributor;
 use Illuminate\Http\Request;
 use App\Models\Produk;
+use App\Models\Pembelian;
 use App\Models\PembelianDetail;
-use function PHPUnit\Framework\returnArgument;
 
 class PembelianDetailController extends Controller
 {
@@ -15,6 +15,7 @@ class PembelianDetailController extends Controller
         $id_pembelian = session('id_pembelian');
         $produk = Produk::orderBy('nama_produk')->get();
         $distributor = Distributor::find(session('id_distributor'));
+        $diskon = Pembelian::find($id_pembelian)->diskon ?? 0;
         if (! $distributor) {
             abort(404);
         }
@@ -40,7 +41,7 @@ class PembelianDetailController extends Controller
             $row['jumlah_pembelian_detail'] = '<input type="number" class="form-control input-sm quantity" data-id="'. $item->id_pembelian_detail .'" value="'. $item->jumlah_pembelian_detail .'">';
             $row['subtotal_pembelian_detail'] = 'Rp. '. format_uang ($item->subtotal_pembelian_detail);
             $row['aksi'] = '<div class="btn-group">
-                            <button onclick="deleteData(`'.route('pembelian_detail.destroy', $item->id_pembelian_detail).'`)"class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i> Hapus</button>
+                            <button onclick="deleteData(`'.route('pembelian_detail.destroy', $item->id_pembelian_detail).'`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i> Hapus</button>
                             </div>';
             $data[] = $row;
 
@@ -60,10 +61,10 @@ class PembelianDetailController extends Controller
 
 
         return datatables()
-        ->of($data)
-        ->addIndexColumn()
-        ->rawColumns(['aksi', 'kode_produk', 'jumlah_pembelian_detail'])
-        ->make(true);
+            ->of($data)
+            ->addIndexColumn()
+            ->rawColumns(['aksi', 'kode_produk', 'jumlah_pembelian_detail'])
+            ->make(true);
     }
 
     public function store(Request $request)
