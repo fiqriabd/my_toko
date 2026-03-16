@@ -15,7 +15,6 @@ class PembelianDetailController extends Controller
         $id_pembelian = session('id_pembelian');
         $produk = Produk::orderBy('nama_produk')->get();
         $distributor = Distributor::find(session('id_distributor'));
-        $diskon = Pembelian::find($id_pembelian)->diskon ?? 0;
         if (! $distributor) {
             abort(404);
         }
@@ -35,7 +34,7 @@ class PembelianDetailController extends Controller
         
         foreach ($detail as $item) {
             $row = array();
-            $row['kode_produk'] = '<span class="label label-success">'. $item->produk['kode_produk'] . '<span>';
+            $row['kode_produk'] = '<span class="label label-success">'. $item->produk['kode_produk'] . '</span>';
             $row['nama_produk'] = $item->produk['nama_produk'];
             $row['harga_beli_pembelian_detail'] = 'Rp. '. format_uang ($item -> harga_beli_pembelian_detail);
             $row['jumlah_pembelian_detail'] = '<input type="number" class="form-control input-sm quantity" data-id="'. $item->id_pembelian_detail .'" value="'. $item->jumlah_pembelian_detail .'">';

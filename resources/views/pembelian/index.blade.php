@@ -21,7 +21,7 @@
                 @endempty
               </div>
                 <div class="box-body table-responsive">
-                    <table class="table table-striped table-bordered">
+                    <table class="table table-striped table-bordered table-pembelian">
                     <thead>
                         <th width="5%">No</th>
                         <th>Tanggal</th>
@@ -49,10 +49,8 @@
   let table, table1;
 
   $(function(){
-    table =   $('.table').DataTable({
-       responsive: true,
+    table =   $('.table-pembelian').DataTable({
             processing: true,
-            serverSide: true,
             autoWidth: false,
             ajax: {
                 url: '{{ route('pembelian.data') }}',
@@ -69,7 +67,7 @@
             ]
     });
 
-     $('.table-supplier').DataTable();
+     $('.table-distributor').DataTable();
         table1 = $('.table-detail').DataTable({
             processing: true,
             bSort: false,
@@ -86,7 +84,7 @@
 
   });
 
-  function addForm(url){
+  function addForm(){
     $('#modal-distributor').modal('show');
 
   }
@@ -98,26 +96,26 @@
         table1.ajax.reload();
     }
 
-  function editForm(url){
-    $('#modal-form').modal('show');
-    $('#modal-form .modal-title').text('Edit Pembelian');
+//   function editForm(url){
+//     $('#modal-form').modal('show');
+//     $('#modal-form .modal-title').text('Edit Pembelian');
 
-    $('#modal-form form')[0].reset();
-    $('#modal-form form').attr('action', url);
-    $('#modal-form [name=_method]').val('put');
-    $('#modal-form [name=deskripsi_pembelian]').focus();
+//     $('#modal-form form')[0].reset();
+//     $('#modal-form form').attr('action', url);
+//     $('#modal-form [name=_method]').val('put');
+//     $('#modal-form [name=deskripsi_pembelian]').focus();
 
-    $.get(url)
-        .done((response) => {
-            $('#modal-form [name=deskripsi_pembelian]').val(response.deskripsi_pembelian);
-            $('#modal-form [name=nominal_pembelian]').val(response.nominal_pembelian);
-            $('#modal-form [name=alamat_pembelian]').val(response.alamat_pembelian);
-        })
-        .fail((errors) => {
-            alert('Tidak dapat menampilkan data');
-            return;
-      });  
-  }
+//     $.get(url)
+//         .done((response) => {
+//             $('#modal-form [name=deskripsi_pembelian]').val(response.deskripsi_pembelian);
+//             $('#modal-form [name=nominal_pembelian]').val(response.nominal_pembelian);
+//             $('#modal-form [name=alamat_pembelian]').val(response.alamat_pembelian);
+//         })
+//         .fail((errors) => {
+//             alert('Tidak dapat menampilkan data');
+//             return;
+//       });  
+//   }
 
   function deleteData(url){
       if(confirm('Yakin ingin menghapus data terpilih?')){

@@ -14,7 +14,7 @@
                             <th>Nama</th>
                             <th>Telepon</th>
                             <th>Alamat</th>
-                            <th>Aksi <i class="fa fa-cog"></fa></th>
+                            <th>Aksi <i class="fa fa-cog"></i></th>
                         </thead>
                         <tbody>
                             @foreach ($distributor as $key => $item)

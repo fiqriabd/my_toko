@@ -14,7 +14,7 @@
                             <th>Kode</th>
                             <th>Nama</th>
                             <th>Harga Beli</th>
-                            <th>Aksi <i class="fa fa-cog"></fa></th>
+                            <th>Aksi <i class="fa fa-cog"></i></th>
                         </thead>
                         <tbody>
                             @foreach ($produk as $key => $item)
@@ -28,7 +28,7 @@
                                             onclick="pilihProduk('{{ $item->id_produk }}','{{ $item->kode_produk }}')">
                                             <i class="fa fa-check-circle"></i>
                                             Pilih
-                                        </button>
+                                        </a>
                                     </td>
                                 </tr>
                             

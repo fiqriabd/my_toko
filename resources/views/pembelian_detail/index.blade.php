@@ -29,6 +29,8 @@
       }
   }
 </style>
+@endpush
+
 @section('breadcrumb')
     @parent
     <li class="active">Transaksi Pembelian</li>
@@ -56,6 +58,7 @@
                 </table>
               </div>
                 <div class="box-body">
+                  
                   <form class="form-produk">
                     @csrf
                         <div class="form-group row">
@@ -94,8 +97,8 @@
                         <form action="{{ route('pembelian.store') }}" class="form-pembelian" method="post">
                           @csrf
                           <input type="hidden" name="id_pembelian" value="{{ $id_pembelian }}">
-                          <input type="hidden" name="total_harga_pembelian" id="total">
-                          <input type="hidden" name="total_item_pembelian" id="total_item">
+                          <input type="hidden" name="total" id="total">
+                          <input type="hidden" name="total_item" id="total_item">
                           <input type="hidden" name="bayar_pembelian" id="bayar_pembelian">
 
                           <div class="form-group row">
@@ -133,15 +136,13 @@
 
 @push('scripts')
 <script>
-  let table, table2;
+  let table, table2; 
 
   $(function(){
     $('body').addClass('sidebar-collapse');
 
     table =   $('.table-pembelian').DataTable({
-        responsive: true,
         processing: true,
-        serverSide: true,
         autoWidth: false,
         ajax: {
           url: '{{ route('pembelian_detail.data', $id_pembelian) }}',
@@ -157,7 +158,6 @@
         ], 
         dom: 'Brt',
         bSort: false,
-        paginate: false
     })
     .on('draw.dt', function(){
         loadForm($('#diskon_pembelian').val());
@@ -176,7 +176,7 @@
 
         if (jumlah > 1000) {
           $(this).val(1000);
-          alert("Jumlah tidak boleh lebih dari 10000");
+          alert("Jumlah tidak boleh lebih dari 1000");
           return;
         }
 
@@ -195,7 +195,6 @@
                 return;
             });
     });
-  });
 
       $(document).on('input', '#diskon_pembelian', function(){
         if($(this).val() == ""){
@@ -208,7 +207,7 @@
     $('.btn-simpan').on('click', function(){
         $('.form-pembelian').submit();
     });
-
+  });
 
 
   function tampilProduk(){
@@ -246,18 +245,18 @@
                     '_method': 'delete'
                 })
              .done((response) => {
-                    table.ajax.reload() => loadForm($('#diskon').val()));
+                    table.ajax.reload();
                 })
               .fail((errors) => {
                     alert('Tidak dapat menghapus data');
                     return;
-              })
+              });
       }
   }
    
   function loadForm(diskon = 0) {
-      $('#total_harga_pembelian').val($('.total').text());
-      $('#total_item_pembelian').val($('.total_item').text());
+      $('#total').val($('.total').text());
+      $('#total_item').val($('.total_item').text());
 
       $.get(`{{ url('/pembelian_detail/loadform') }}/${diskon}/${$('.total').text()}`)
           .done(response => {

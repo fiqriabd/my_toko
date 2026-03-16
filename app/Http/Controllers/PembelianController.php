@@ -38,9 +38,6 @@ class PembelianController extends Controller
             ->addColumn('distributor', function ($pembelian) {
                 return $pembelian->distributor->nama_distributor;
             })
-            ->editColumn('diskon_pembelian', function ($pembelian) {
-                return $pembelian->diskon_pembelian . '%';
-            })
             ->addColumn('aksi', function ($pembelian) {
                 return '
                 <div class="btn-group">
@@ -71,8 +68,8 @@ class PembelianController extends Controller
     public function store(Request $request)
     {
         $pembelian = Pembelian::findOrFail($request->id_pembelian);
-        $pembelian->total_item_pembelian = $request->total_item_pembelian;
-        $pembelian->total_harga_pembelian = $request->total_harga_pembelian;
+        $pembelian->total_item_pembelian = $request->total_item;
+        $pembelian->total_harga_pembelian = $request->total;
         $pembelian->diskon_pembelian = $request->diskon_pembelian;
         $pembelian->bayar_pembelian = $request->bayar_pembelian;
         $pembelian->update();
@@ -119,11 +116,7 @@ class PembelianController extends Controller
         $pembelian = Pembelian::find($id);
         $detail    = PembelianDetail::where('id_pembelian', $pembelian->id_pembelian)->get();
         foreach ($detail as $item) {
-            $produk = Produk::find($item->id_produk);
-            if ($produk) {
-                $produk->stok_produk -= $item->jumlah_pembelian_detail;
-                $produk->update();
-            }
+            
             $item->delete();
         }
 
