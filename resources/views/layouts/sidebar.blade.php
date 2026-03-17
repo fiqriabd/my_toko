@@ -47,7 +47,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('pembelian.index') }}">
+                <a href="<?php echo e(route('pembelian.index')); ?>">
                     <i class="fa fa-download"></i> <span>Pembelian</span>
                 </a>
             </li>

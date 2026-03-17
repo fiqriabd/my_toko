@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Distributor;
 use Illuminate\Http\Request;
 use App\Models\Produk;
-use App\Models\Pembelian;
 use App\Models\PembelianDetail;
 
 class PembelianDetailController extends Controller

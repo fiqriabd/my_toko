@@ -39,7 +39,7 @@
 @section('content')
         <!-- /.row -->
         <div class="row">
-          <div class="col-lg-12">
+          <div class="col-md-12">
             <div class="box">
               <div class="box-header with-border">
                 <table>
@@ -131,6 +131,7 @@
             </div>
           </div>
         </div>
+
 @includeIf('pembelian_detail.produk')
 @endsection
 
@@ -141,7 +142,7 @@
   $(function(){
     $('body').addClass('sidebar-collapse');
 
-    table =   $('.table-pembelian').DataTable({
+    table = $('.table-pembelian').DataTable({
         processing: true,
         autoWidth: false,
         ajax: {
@@ -235,7 +236,7 @@
         .fail(errors => {
             alert("Tidak dapat menyimpan data");
             return;
-        })
+        });
   }
 
   function deleteData(url){
