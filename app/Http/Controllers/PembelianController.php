@@ -40,6 +40,9 @@ class PembelianController extends Controller
             ->addColumn('distributor', function ($pembelian) {
                 return $pembelian->distributor->nama_distributor ?? '-' ;
             })
+            ->editColumn('diskon', function ($pembelian) {
+                return $pembelian->diskon_pembelian . '%';
+            })
             ->addColumn('aksi', function ($pembelian) {
                 return '
                 <div class="btn-group">

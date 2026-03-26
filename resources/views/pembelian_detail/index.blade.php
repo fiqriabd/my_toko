@@ -111,7 +111,7 @@
                           <div class="form-group row">
                             <label for="diskon_pembelian" class="col-lg-2 control-label">Diskon</label>
                             <div class="col-lg-8">
-                              <input type="number" name="diskon_pembelian" id="diskon_pembelian" class="form-control" value="0">
+                              <input type="number" name="diskon_pembelian" id="diskon_pembelian" class="form-control" value="{{ $diskon }}">
                             </div>
                           </div>
 
