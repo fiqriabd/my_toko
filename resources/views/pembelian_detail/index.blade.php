@@ -188,7 +188,7 @@
             })
             .done(response => {
               $(this).on('mouseout', function(){
-                  table.ajax.reload();
+                  table.ajax.reload(() => loadForm($('#diskon_pembelian').val()));
               });
             })
             .fail(errors =>{
@@ -231,7 +231,7 @@
       $.post('{{ route('pembelian_detail.store') }}', $('.form-produk').serialize())
         .done(response => {
             $('#kode_produk').focus();
-            table.ajax.reload();
+            table.ajax.reload(() => loadForm($('#diskon_pembelian').val()));
         })
         .fail(errors => {
             alert("Tidak dapat menyimpan data");
@@ -246,7 +246,7 @@
                     '_method': 'delete'
                 })
              .done((response) => {
-                    table.ajax.reload();
+                    table.ajax.reload(() => loadForm($('#diskon_pembelian').val()));
                 })
               .fail((errors) => {
                     alert('Tidak dapat menghapus data');

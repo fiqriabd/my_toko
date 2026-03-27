@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Penjualan;
 use App\Models\PenjualanDetail;
+use App\Models\Pengaturan;
 use App\Models\Produk;
 use Illuminate\Http\Request;
 use PDF;

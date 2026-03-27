@@ -52,12 +52,12 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="{{ route('penjualan.index') }}">
                     <i class="fa fa-upload"></i> <span>Penjualan</span>
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="{{ route('transaksi.baru') }}">
                     <i class="fa fa-cart-plus"></i> <span>Transaksi</span>
                 </a>
             </li>  
