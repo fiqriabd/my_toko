@@ -56,9 +56,16 @@
                     <i class="fa fa-upload"></i> <span>Penjualan</span>
                 </a>
             </li>
+
+            <li>
+                <a href="{{ route('transaksi.index') }}">
+                    <i class="fa fa-cart-plus"></i> <span>Transaksi Lama</span>
+                </a>
+            </li>
+
             <li>
                 <a href="{{ route('transaksi.baru') }}">
-                    <i class="fa fa-cart-plus"></i> <span>Transaksi</span>
+                    <i class="fa fa-cart-plus"></i> <span>Transaksi Baru</span>
                 </a>
             </li>  
   
