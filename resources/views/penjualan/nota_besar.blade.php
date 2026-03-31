@@ -31,7 +31,7 @@
     <table width="100%">
         <tr>
             <td rowspan="4" width="60%">
-                <img src="{{ asset($pengaturan->path_logo) }}" alt="{{ $setting->path_logo }}" width="120">
+                <img src="{{ asset($pengaturan->path_logo) }}" alt="{{ $pengaturan->path_logo }}" width="120">
                 <br>
                 {{ $pengaturan->alamat }}
                 <br>

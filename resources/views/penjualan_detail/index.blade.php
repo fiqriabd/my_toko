@@ -82,7 +82,7 @@
                             <input type="hidden" name="id_penjualan" value="{{ $id_penjualan }}">
                             <input type="hidden" name="total" id="total">
                             <input type="hidden" name="total_item" id="total_item">
-                            <input type="hidden" name="bayar" id="bayar">
+                            <input type="hidden" name="bayar_penjualan_detail" id="bayar_penjualan_detail">
 
                             <div class="form-group row">
                                 <label for="totalrp" class="col-lg-2 control-label">Total</label>
@@ -140,16 +140,16 @@
                 {data: 'DT_RowIndex', searchable: false, sortable: false},
                 {data: 'kode_produk'},
                 {data: 'nama_produk'},
-                {data: 'harga_jual'},
-                {data: 'jumlah'},
-                {data: 'subtotal'},
+                {data: 'harga_jual_penjualan_detail'},
+                {data: 'jumlah_penjualan_detail'},
+                {data: 'subtotal_penjualan_detail'},
                 {data: 'aksi', searchable: false, sortable: false},
             ],
             dom: 'Brt',
             bSort: false,
         })
         .on('draw.dt', function () {
-            loadForm($('#diskon').val());
+            loadForm();
             setTimeout(() => {
                 $('#diterima').trigger('input');
             }, 300);
@@ -174,11 +174,11 @@
             $.post(`{{ url('/transaksi') }}/${id}`, {
                     '_token': $('[name=csrf-token]').attr('content'),
                     '_method': 'put',
-                    'jumlah': jumlah
+                    'jumlah_penjualan_detail': jumlah
                 })
                 .done(response => {
                     $(this).on('mouseout', function () {
-                        table.ajax.reload(() => loadForm($('#diskon').val()));
+                        table.ajax.reload(() => loadForm());
                     });
                 })
                 .fail(errors => {
@@ -187,20 +187,13 @@
                 });
         });
 
-        $(document).on('input', '#diskon', function () {
-            if ($(this).val() == "") {
-                $(this).val(0).select();
-            }
-
-            loadForm($(this).val());
-        });
 
         $('#diterima').on('input', function () {
             if ($(this).val() == "") {
                 $(this).val(0).select();
             }
 
-            loadForm($('#diskon').val(), $(this).val());
+            loadForm($(this).val());
         }).focus(function () {
             $(this).select();
         });
@@ -229,7 +222,7 @@
         $.post('{{ route('transaksi.store') }}', $('.form-produk').serialize())
             .done(response => {
                 $('#kode_produk').focus();
-                table.ajax.reload(() => loadForm($('#diskon').val()));
+                table.ajax.reload(() => loadForm());
             })
             .fail(errors => {
                 alert('Tidak dapat menyimpan data');
@@ -244,7 +237,7 @@
                     '_method': 'delete'
                 })
                 .done((response) => {
-                    table.ajax.reload(() => loadForm($('#diskon').val()));
+                    table.ajax.reload(() => loadForm());
                 })
                 .fail((errors) => {
                     alert('Tidak dapat menghapus data');
@@ -253,11 +246,15 @@
         }
     }
 
-    function loadForm(diskon = 0, diterima = 0) {
+    function loadForm(diterima = 0) {
+        if (diterima === null) {
+        diterima = $('#diterima').val() || 0;
+        }
+        
         $('#total').val($('.total').text());
         $('#total_item').val($('.total_item').text());
 
-        $.get(`{{ url('/transaksi/loadform') }}/${diskon}/${$('.total').text()}/${diterima}`)
+        $.get(`/transaksi/loadform/${$('.total').text()}/${diterima}`)
             .done(response => {
                 $('#totalrp').val('Rp. '+ response.totalrp);
                 $('#bayarrp').val('Rp. '+ response.bayarrp);

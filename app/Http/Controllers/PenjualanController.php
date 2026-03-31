@@ -46,7 +46,7 @@ class PenjualanController extends Controller
                 </div>
                 ';
             })
-            ->rawColumns(['aksi', 'kode_member'])
+            ->rawColumns(['aksi'])
             ->make(true);
 
     }
@@ -57,7 +57,7 @@ class PenjualanController extends Controller
         $penjualan->total_item_penjualan = 0;
         $penjualan->total_harga_penjualan = 0;
         $penjualan->bayar_penjualan = 0;
-        $penjualan->diterima = 0;
+        $penjualan->diterima_penjualan = 0;
         $penjualan->id_user = auth()->id();
         $penjualan->save();
 

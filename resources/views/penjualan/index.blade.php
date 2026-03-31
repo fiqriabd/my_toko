@@ -13,7 +13,7 @@
         <div class="row">
           <div class="col-md-12">
             <div class="box">
-              <div class="box-header with-border">
+              <div class="box-header with-border"></div>
                 <div class="box-body table-responsive">
                     <table class="table table-striped table-bordered table-penjualan">
                     <thead>
@@ -54,7 +54,7 @@
                 {data: 'total_item_penjualan'},
                 {data: 'total_harga_penjualan'},
                 {data: 'bayar_penjualan'},
-                {data: 'kasir_penjualan'},
+                {data: 'kasir'},
                 {data: 'aksi', searchable: false, sortable: false},
             ]
     });

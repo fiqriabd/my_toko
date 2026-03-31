@@ -40,7 +40,7 @@ class PenjualanDetailController extends Controller
 
         foreach ($detail as $item) {
             $row = array();
-            $row['kode_produk'] = '<span class="label label-success">'. $item->produk['kode_produk'] .'</span';
+            $row['kode_produk'] = '<span class="label label-success">'. $item->produk['kode_produk'] .'</span>';
             $row['nama_produk'] = $item->produk['nama_produk'];
             $row['harga_jual_penjualan_detail']  = 'Rp. '. format_uang($item->harga_jual_penjualan_detail);
             $row['jumlah_penjualan_detail']      = '<input type="number" class="form-control input-sm quantity" data-id="'. $item->id_penjualan_detail .'" value="'. $item->jumlah_penjualan_detail .'">';
@@ -112,7 +112,7 @@ class PenjualanDetailController extends Controller
         $data    = [
             'totalrp' => format_uang($total),
             'bayar' => $bayar,
-            'bayarrp' => format_uang($bayar),
+            'bayarrp' => format_uang($total),
             'terbilang' => ucwords(terbilang($bayar). ' Rupiah'),
             'kembalirp' => format_uang($kembali),
             'kembali_terbilang' => ucwords(terbilang($kembali). ' Rupiah'),
