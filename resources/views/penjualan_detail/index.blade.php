@@ -59,7 +59,7 @@
                     </div>
                 </form>
 
-                <table class="table table-stiped table-bordered table-penjualan">
+                <table class="table table-striped table-bordered table-penjualan">
                     <thead>
                         <th width="5%">No</th>
                         <th>Kode</th>

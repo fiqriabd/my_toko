@@ -102,10 +102,10 @@ class PenjualanController extends Controller
                 return 'Rp. '. format_uang($detail->harga_jual_penjualan_detail);
             })
             ->addColumn('jumlah', function ($detail) {
-                return format_uang($detail->jumlah);
+                return format_uang($detail->jumlah_penjualan_detail);
             })
             ->addColumn('subtotal', function ($detail) {
-                return 'Rp. '. format_uang($detail->subtotal);
+                return 'Rp. '. format_uang($detail->subtotal_penjualan_detail);
             })
             ->rawColumns(['kode_produk'])
             ->make(true);

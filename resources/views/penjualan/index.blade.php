@@ -42,7 +42,7 @@
   let table, table1;
 
   $(function(){
-    table =   $('.table-penjualan').DataTable({
+    table = $('.table-penjualan').DataTable({
             processing: true,
             autoWidth: false,
             ajax: {
@@ -67,7 +67,7 @@
                 {data: 'DT_RowIndex', searchable: false, sortable: false},
                 {data: 'kode_produk'},
                 {data: 'nama_produk'},
-                {data: 'harga_beli_penjualan_detail'},
+                {data: 'harga_jual_penjualan_detail'},
                 {data: 'jumlah_penjualan_detail'},
                 {data: 'subtotal_penjualan_detail'},
             ]
