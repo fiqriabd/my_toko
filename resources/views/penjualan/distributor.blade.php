@@ -23,7 +23,7 @@
                                     <td>{{ $item->telepon_distributor }}</td>
                                     <td>{{ $item->alamat_distributor }}</td>
                                     <td>
-                                        <a href="{{ route('pembelian.create', $item->id_distributor) }}" class="btn btn-primary btn-xs btn-flat">
+                                        <a href="{{ route('penjualan.create', $item->id_distributor) }}" class="btn btn-primary btn-xs btn-flat">
                                             <i class="fa fa-check-circle"></i>
                                             Pilih
                                         </a>
