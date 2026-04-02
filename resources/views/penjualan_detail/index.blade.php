@@ -67,7 +67,7 @@
                         <th>Harga</th>
                         <th width="15%">Jumlah</th>
                         <th>Subtotal</th>
-                        <th width="15%"><i class="fa fa-cog"></i></th>
+                        <th width="15%">Aksi<i class="fa fa-cog"></i></th>
                     </thead>
                 </table>
 
@@ -149,7 +149,7 @@
             bSort: false,
         })
         .on('draw.dt', function () {
-            loadForm();
+            //loadForm();
             setTimeout(() => {
                 $('#diterima').trigger('input');
             }, 300);
@@ -247,6 +247,10 @@
     }
 
     function loadForm(diterima = 0) {
+        let total = $('.total').text();
+        if (!total || total == '')
+            return;
+        
         if (diterima === null) {
         diterima = $('#diterima').val() || 0;
         }
