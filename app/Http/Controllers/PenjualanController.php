@@ -78,7 +78,7 @@ class PenjualanController extends Controller
         foreach ($detail as $item) {
 
             $produk = Produk::find($item->id_produk);
-            $produk->stok_produk -= $item->jumlah;
+            $produk->stok_produk -= $item->jumlah_penjualan_detail;
             $produk->update();
         }
 

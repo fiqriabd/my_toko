@@ -67,7 +67,7 @@
                         <th>Harga</th>
                         <th width="15%">Jumlah</th>
                         <th>Subtotal</th>
-                        <th width="15%">Aksi<i class="fa fa-cog"></i></th>
+                        <th width="15%">Aksi <i class="fa fa-cog"></i></th>
                     </thead>
                 </table>
 
@@ -82,7 +82,7 @@
                             <input type="hidden" name="id_penjualan" value="{{ $id_penjualan }}">
                             <input type="hidden" name="total" id="total">
                             <input type="hidden" name="total_item" id="total_item">
-                            <input type="hidden" name="bayar_penjualan_detail" id="bayar_penjualan_detail">
+                            <input type="hidden" name="bayar_penjualan" id="bayar_penjualan">
 
                             <div class="form-group row">
                                 <label for="totalrp" class="col-lg-2 control-label">Total</label>
@@ -99,7 +99,7 @@
                             <div class="form-group row">
                                 <label for="diterima" class="col-lg-2 control-label">Diterima</label>
                                 <div class="col-lg-8">
-                                    <input type="number" id="diterima" class="form-control" name="diterima" value="{{ $penjualan->diterima ?? 0 }}">
+                                    <input type="number" id="diterima" class="form-control" name="diterima_penjualan" value="{{ $penjualan->diterima_penjualan ?? 0 }}">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -114,7 +114,7 @@
             </div>
 
             <div class="box-footer">
-                <button type="submit" class="btn btn-primary btn-sm btn-flat pull-right btn-simpan"><i class="fa fa-floppy-o"></i> Simpan Transaksi</button>
+                <button type="button" class="btn btn-primary btn-sm btn-flat pull-right btn-simpan"><i class="fa fa-floppy-o"></i> Simpan Transaksi</button>
             </div>
         </div>
     </div>
@@ -151,7 +151,7 @@
         .on('draw.dt', function () {
             //loadForm();
             setTimeout(() => {
-                $('#diterima').trigger('input');
+                loadForm($('#diterima').val() || 0);
             }, 300);
         });
         table2 = $('.table-produk').DataTable();
@@ -247,10 +247,14 @@
     }
 
     function loadForm(diterima = 0) {
-        let total = $('.total').text();
+        let total = parseInt($('.total').text());
         if (!total || total == '')
             return;
         
+        if (!total || isNaN(total)) 
+            return;
+        
+
         if (diterima === null) {
         diterima = $('#diterima').val() || 0;
         }
@@ -258,11 +262,14 @@
         $('#total').val($('.total').text());
         $('#total_item').val($('.total_item').text());
 
-        $.get(`/transaksi/loadform/${$('.total').text()}/${diterima}`)
+        let url = `{{ route('transaksi.load_form', [':total', ':diterima']) }}`;
+        url = url.replace(':total', total).replace(':diterima', diterima);
+        
+        $.get(url)
             .done(response => {
                 $('#totalrp').val('Rp. '+ response.totalrp);
                 $('#bayarrp').val('Rp. '+ response.bayarrp);
-                $('#bayar').val(response.bayar);
+                $('#bayar_penjualan').val(response.bayar);
                 $('.tampil-bayar').text('Bayar: Rp. '+ response.bayarrp);
                 $('.tampil-terbilang').text(response.terbilang);
 

@@ -59,7 +59,7 @@
 
             <li>
                 <a href="{{ route('transaksi.index') }}">
-                    <i class="fa fa-cart-plus"></i> <span>Transaksi Lama</span>
+                    <i class="fa fa-cart-plus"></i> <span>Transaksi Aktif</span>
                 </a>
             </li>
 

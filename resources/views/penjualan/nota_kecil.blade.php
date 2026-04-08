@@ -57,7 +57,7 @@
 <body onload="window.print()">
     <button class="btn-print" style="position: absolute; right: 1rem; top: rem;" onclick="window.print()">Print</button>
     <div class="text-center">
-        <h3 style="margin-bottom: 5px;">{{ strtoupper($perusahaan->nama_perusahaan) }}</h3>
+        <h3 style="margin-bottom: 5px;">{{ strtoupper($perusahaan->nama_perusahaan ?? 'TOKO') }}</h3>
         <p>{{ strtoupper($pengaturan->alamat) }}</p>
     </div>
     <br>
