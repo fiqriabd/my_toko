@@ -78,6 +78,23 @@ class PenjualanDetailController extends Controller
             return response()->json('Produk tidak ditemukan', 400);
         }
 
+        // $detail = new PenjualanDetail();
+        // $detail->id_penjualan = $request->id_penjualan;
+        // $detail->id_produk = $produk->id_produk;
+        // $detail->harga_jual_penjualan_detail = $produk->harga_jual_produk;
+        // $detail->jumlah_penjualan_detail = 1;
+        // $detail->subtotal_penjualan_detail = $produk->harga_jual_produk;
+        // $detail->save();
+
+        $detail = PenjualanDetail::where('id_penjualan', $request->id_penjualan)
+        ->where('id_produk', $produk->id_produk)
+        ->first();
+
+    if ($detail) {
+        $detail->jumlah_penjualan_detail += 1;
+        $detail->subtotal_penjualan_detail = $detail->jumlah_penjualan_detail * $detail->harga_jual_penjualan_detail;
+        $detail->update();
+    } else {
         $detail = new PenjualanDetail();
         $detail->id_penjualan = $request->id_penjualan;
         $detail->id_produk = $produk->id_produk;
@@ -85,6 +102,7 @@ class PenjualanDetailController extends Controller
         $detail->jumlah_penjualan_detail = 1;
         $detail->subtotal_penjualan_detail = $produk->harga_jual_produk;
         $detail->save();
+    }
 
         return response()->json('Data berhasil disimpan', 200);
     }

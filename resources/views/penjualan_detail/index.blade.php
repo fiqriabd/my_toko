@@ -248,8 +248,8 @@
 
     function loadForm(diterima = 0) {
         let total = parseInt($('.total').text());
-        if (!total || total == '')
-            return;
+        // if (!total || total == '')
+        //     return;
         
         if (!total || isNaN(total)) 
             return;

@@ -79,6 +79,9 @@ class PenjualanController extends Controller
 
             $produk = Produk::find($item->id_produk);
             $produk->stok_produk -= $item->jumlah_penjualan_detail;
+            if ($produk->stok_produk < $item->jumlah_penjualan_detail){
+                return back()->with('error', "Stok tidak cukup");
+            }
             $produk->update();
         }
 

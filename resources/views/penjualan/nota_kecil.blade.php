@@ -57,7 +57,7 @@
 <body onload="window.print()">
     <button class="btn-print" style="position: absolute; right: 1rem; top: rem;" onclick="window.print()">Print</button>
     <div class="text-center">
-        <h3 style="margin-bottom: 5px;">{{ strtoupper($perusahaan->nama_perusahaan ?? 'TOKO') }}</h3>
+        <h3 style="margin-bottom: 5px;">{{ strtoupper($pengaturan->nama_perusahaan ?? 'TOKO') }}</h3>
         <p>{{ strtoupper($pengaturan->alamat) }}</p>
     </div>
     <br>
@@ -76,7 +76,7 @@
                 <td colspan="3">{{ $item->produk->nama_produk }}</td>
             </tr>
             <tr>
-                <td>{{ $item->jumlah }} x {{ format_uang($item->harga_jual_penjualan_detail) }}</td>
+                <td>{{ $item->jumlah_penjualan_detail }} x {{ format_uang($item->harga_jual_penjualan_detail) }}</td>
                 <td></td>
                 <td class="text-right">{{ format_uang($item->jumlah_penjualan_detail * $item->harga_jual_penjualan_detail) }}</td>
             </tr>

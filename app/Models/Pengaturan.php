@@ -10,4 +10,3 @@ class Pengaturan extends Model
     protected $primaryKey = 'id_pengaturan';
     protected $guarded = [];
 }
-  
