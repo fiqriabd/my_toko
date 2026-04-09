@@ -73,6 +73,17 @@ class PembelianDetailController extends Controller
         if (! $produk) {
             return response()->json("Data gagal disimpan", 400);
         }
+        
+            $detail = PembelianDetail::where('id_pembelian', $request->id_pembelian)
+                ->where('id_produk', $request->id_produk)
+                ->first();
+
+        if ($detail) {
+        $detail->jumlah_pembelian_detail += 1;
+        $detail->subtotal_pembelian_detail = 
+            $detail->jumlah_pembelian_detail * $detail->harga_beli_pembelian_detail;
+        $detail->update();
+        } else {
         $detail = new PembelianDetail();
         $detail->id_pembelian = $request->id_pembelian;
         $detail->id_produk = $produk->id_produk;
@@ -80,7 +91,7 @@ class PembelianDetailController extends Controller
         $detail->jumlah_pembelian_detail = 1;
         $detail->subtotal_pembelian_detail = $produk->harga_beli_produk;
         $detail->save();
-
+        }
         return response()->json("Data berhasil disimpan", 200);
     }
 
