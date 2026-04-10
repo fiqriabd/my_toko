@@ -68,20 +68,26 @@ class PenjualanController extends Controller
     public function store(Request $request)
     {
         $penjualan = Penjualan::findOrFail($request->id_penjualan);
-        $penjualan->total_item_penjualan = $request->total_item;
-        $penjualan->total_harga_penjualan = $request->total;
-        $penjualan->bayar_penjualan = $request->bayar_penjualan;
+        
+        $penjualan->total_item_penjualan = $request->total_item ?? 0;
+        $penjualan->total_harga_penjualan = $request->total ?? 0;
+        $penjualan->bayar_penjualan = $request->bayar_penjualan ?? 0;
         $penjualan->diterima_penjualan = $request->diterima_penjualan;
+        if (!$request->total_item || !$request->total) {
+            return back()->with('error', 'Total transaksi tidak valid');
+        }
         $penjualan->update();
 
         $detail = PenjualanDetail::where('id_penjualan', $penjualan->id_penjualan)->get();
         foreach ($detail as $item) {
 
             $produk = Produk::find($item->id_produk);
-            $produk->stok_produk -= $item->jumlah_penjualan_detail;
+            
             if ($produk->stok_produk < $item->jumlah_penjualan_detail){
                 return back()->with('error', "Stok tidak cukup");
             }
+
+            $produk->stok_produk -= $item->jumlah_penjualan_detail;
             $produk->update();
         }
 

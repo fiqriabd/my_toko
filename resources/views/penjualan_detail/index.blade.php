@@ -114,7 +114,7 @@
             </div>
 
             <div class="box-footer">
-                <button type="button" class="btn btn-primary btn-sm btn-flat pull-right btn-simpan"><i class="fa fa-floppy-o"></i> Simpan Transaksi</button>
+                <button type="submit" class="btn btn-primary btn-sm btn-flat pull-right"><i class="fa fa-floppy-o"></i> Simpan Transaksi</button>
             </div>
         </div>
     </div>
@@ -198,9 +198,9 @@
             $(this).select();
         });
 
-        $('.btn-simpan').on('click', function () {
-            $('.form-penjualan').submit();
-        });
+        // $('.btn-simpan').on('click', function () {
+        //     $('.form-penjualan').submit();
+        // });
     });
 
     function tampilProduk() {
@@ -259,8 +259,8 @@
         diterima = $('#diterima').val() || 0;
         }
         
-        $('#total').val($('.total').text());
-        $('#total_item').val($('.total_item').text());
+        $('#total').val($('.total').text() || 0);
+        $('#total_item').val($('.total_item').text() || 0);
 
         let url = `{{ route('transaksi.load_form', [':total', ':diterima']) }}`;
         url = url.replace(':total', total).replace(':diterima', diterima);
