@@ -113,7 +113,7 @@ class PenjualanController extends Controller
             ->addColumn('jumlah', function ($detail) {
                 return format_uang($detail->jumlah_penjualan_detail);
             })
-            ->addColumn('subtotal', function ($detail) {
+            ->addColumn('subtotal_penjualan_detail', function ($detail) {
                 return 'Rp. '. format_uang($detail->subtotal_penjualan_detail);
             })
             ->rawColumns(['kode_produk'])

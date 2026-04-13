@@ -114,7 +114,7 @@
             </div>
 
             <div class="box-footer">
-                <button type="submit" class="btn btn-primary btn-sm btn-flat pull-right"><i class="fa fa-floppy-o"></i> Simpan Transaksi</button>
+                <button type="submit" class="btn btn-primary btn-sm btn-flat pull-right btn-simpan"><i class="fa fa-floppy-o"></i> Simpan Transaksi</button>
             </div>
         </div>
     </div>
@@ -198,9 +198,10 @@
             $(this).select();
         });
 
-        // $('.btn-simpan').on('click', function () {
-        //     $('.form-penjualan').submit();
-        // });
+        $('.btn-simpan').on('click', function () {
+            $('.form-penjualan').submit();
+        });
+        
     });
 
     function tampilProduk() {
