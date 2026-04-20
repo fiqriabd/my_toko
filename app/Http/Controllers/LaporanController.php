@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Pembelian;
+use App\Models\Pengeluaran;
+use App\Models\Penjualan;
+use PDF;
 
 class LaporanController extends Controller
 {
@@ -29,9 +33,9 @@ class LaporanController extends Controller
                         $tanggal = $awal;
             $awal = date('Y-m-d', strtotime("+1 day", strtotime($awal)));
 
-            $total_penjualan = Penjualan::where('created_at', 'LIKE', "%$tanggal%")->sum('bayar');
-            $total_pembelian = Pembelian::where('created_at', 'LIKE', "%$tanggal%")->sum('bayar');
-            $total_pengeluaran = Pengeluaran::where('created_at', 'LIKE', "%$tanggal%")->sum('nominal');
+            $total_penjualan = Penjualan::where('created_at', 'LIKE', "%$tanggal%")->sum('bayar_penjualan');
+            $total_pembelian = Pembelian::where('created_at', 'LIKE', "%$tanggal%")->sum('bayar_pembelian');
+            $total_pengeluaran = Pengeluaran::where('created_at', 'LIKE', "%$tanggal%")->sum('nominal_pengeluaran');
 
             $pendapatan = $total_penjualan - $total_pembelian - $total_pengeluaran;
             $total_pendapatan += $pendapatan;

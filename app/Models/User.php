@@ -52,6 +52,10 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+    public function scopeIsNotAdmin($query)
+    {
+        return $query->where('level', '!=', 1);
+    }
     /**
      * Get the attributes that should be cast.
      *

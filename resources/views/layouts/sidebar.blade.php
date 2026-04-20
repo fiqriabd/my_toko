@@ -80,7 +80,7 @@
             <li class="header">PENGATURAN</li>
 
             <li>
-                <a href="#">
+                <a href="{{ route('user.index') }}">
                     <i class="fa fa-users"></i> <span>Daftar Kasir</span>
                 </a>
             </li>
