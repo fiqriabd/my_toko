@@ -69,7 +69,7 @@
 
     function addForm(url) {
         $('#modal-form').modal('show');
-        $('#modal-form .modal-title').text('Tambah User');
+        $('#modal-form .modal-title').text('Tambah Kasir');
 
         $('#modal-form form')[0].reset();
         $('#modal-form form').attr('action', url);
