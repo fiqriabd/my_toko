@@ -5,6 +5,7 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\PembelianDetailController;
+use App\Http\Controllers\PengaturanController;
 use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\PenjualanDetailController;
@@ -68,4 +69,8 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::get('/user/data', [UserController::class, 'data'])->name('user.data');
     Route::resource('/user', UserController::class);
+
+    Route::get('/pengaturan', [PengaturanController::class, 'index'])->name('pengaturan.index');
+    Route::get('/pengaturan/first', [PengaturanController::class, 'show'])->name('pengaturan.show');
+    Route::post('/pengaturan', [PengaturanController::class, 'update'])->name('pengaturan.update');
 });

@@ -23,7 +23,6 @@ class PengaturanController extends Controller
         $pengaturan->nama_perusahaan = $request->nama_perusahaan;
         $pengaturan->telepon = $request->telepon;
         $pengaturan->alamat = $request->alamat;
-        $pengaturan->diskon = $request->diskon;
         $pengaturan->tipe_nota = $request->tipe_nota;
 
         if ($request->hasFile('path_logo')) {

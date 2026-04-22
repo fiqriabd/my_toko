@@ -85,7 +85,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="{{ route("pengaturan.index") }}">
                     <i class="fa fa-cog"></i> <span>Pengaturan</span>
                 </a>
             </li>                    
