@@ -51,23 +51,7 @@
                             <div class="tampil-logo"></div>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="path_kartu_member" class="col-lg-2 col-lg-offset-1 control-label">Kartu Member</label>
-                        <div class="col-lg-4">
-                            <input type="file" name="path_kartu_member" class="form-control" id="path_kartu_member"
-                                onchange="preview('.tampil-kartu-member', this.files[0], 300)">
-                            <span class="help-block with-errors"></span>
-                            <br>
-                            <div class="tampil-kartu-member"></div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="diskon" class="col-lg-2 col-lg-offset-1 control-label">Diskon</label>
-                        <div class="col-lg-2">
-                            <input type="number" name="diskon" class="form-control" id="diskon" required>
-                            <span class="help-block with-errors"></span>
-                        </div>
-                    </div>
+
                     <div class="form-group row">
                         <label for="tipe_nota" class="col-lg-2 col-lg-offset-1 control-label">Tipe Nota</label>
                         <div class="col-lg-2">
@@ -125,12 +109,10 @@
                 $('[name=nama_perusahaan]').val(response.nama_perusahaan);
                 $('[name=telepon]').val(response.telepon);
                 $('[name=alamat]').val(response.alamat);
-                $('[name=diskon]').val(response.diskon);
                 $('[name=tipe_nota]').val(response.tipe_nota);
                 $('title').text(response.nama_perusahaan + ' | Pengaturan');
 
                 $('.tampil-logo').html(`<img src="{{ url('/') }}${response.path_logo}" width="200">`);
-                $('.tampil-kartu-member').html(`<img src="{{ url('/') }}${response.path_kartu_member}" width="300">`);
                 $('[rel=icon]').attr('href', `{{ url('/') }}/${response.path_logo}`);
             })
             .fail(errors => {
