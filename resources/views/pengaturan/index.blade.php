@@ -77,15 +77,16 @@
     $(function () {
         showData();
 
-        $('.form-pengaturan').validator().on('submit', function (e) {
-            if (! e.preventDefault()) {
-                $.ajax({
-                    url: $('.form-pengaturan').attr('action'),
-                    type: $('.form-pengaturan').attr('method'),
-                    data: new FormData($('.form-pengaturan')[0]),
-                    async: false,
-                    processData: false,
-                    contentType: false
+        $('.form-pengaturan').on('submit', function (e) {
+            e.preventDefault();
+            
+            $.ajax({
+                url: $('.form-pengaturan').attr('action'),
+                type: $('.form-pengaturan').attr('method'),
+                data: new FormData($('.form-pengaturan')[0]),
+                async: false,
+                processData: false,
+                contentType: false
                 })
                 .done(response => {
                     showData();
@@ -97,9 +98,8 @@
                 })
                 .fail(errors => {
                     alert('Tidak dapat menyimpan data');
-                    return;
                 });
-            }
+            
         });
     });
 

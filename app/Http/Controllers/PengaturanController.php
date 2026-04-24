@@ -19,7 +19,13 @@ class PengaturanController extends Controller
 
     public function update(Request $request)
     {
+        try{
         $pengaturan = Pengaturan::first();
+
+        if (!$pengaturan) {
+            return response()->json('Data pengaturan tidak ditemukan', 500);
+        }
+
         $pengaturan->nama_perusahaan = $request->nama_perusahaan;
         $pengaturan->telepon = $request->telepon;
         $pengaturan->alamat = $request->alamat;
@@ -44,5 +50,8 @@ class PengaturanController extends Controller
         $pengaturan->update();
 
         return response()->json('Data berhasil disimpan', 200);
+    } catch (\Exception $e) {
+        return response()->json($e->getMessage(), 500);
     }
+}
 }
