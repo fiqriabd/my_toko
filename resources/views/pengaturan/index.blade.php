@@ -112,7 +112,8 @@
                 $('[name=tipe_nota]').val(response.tipe_nota);
                 $('title').text(response.nama_perusahaan + ' | Pengaturan');
 
-                $('.tampil-logo').html(`<img src="{{ url('/') }}${response.path_logo}" width="200">`);
+                // $('.tampil-logo').html(`<img src="{{ url('/') }}${response.path_logo}" width="200">`);
+                $('.tampil-logo').html(`<img src="{{ asset('') }}${response.path_logo}" width="200">`);
                 $('[rel=icon]').attr('href', `{{ url('/') }}/${response.path_logo}`);
             })
             .fail(errors => {
